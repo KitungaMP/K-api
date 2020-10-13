@@ -32,7 +32,7 @@ The base prerequisites to create a Webiny project are:
 
 - Github: [@guillainbisimwa](https://github.com/guillainbisimwa)
 - Twitter: [@gullain_bisimwa](https://twitter.com/gullain_bisimwa)
-- Linkedin: [linkedin](https://www.linkedin.com/in/guillain-bisimwa-8a8b7a7b/)
+- Linkedin: [Guillain bisimwa](https://www.linkedin.com/in/guillain-bisimwa-8a8b7a7b/)
 
 ## 🤝 Contributing
 
