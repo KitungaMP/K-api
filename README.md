@@ -34,6 +34,12 @@ The base prerequisites to create a Webiny project are:
 - Twitter: [@gullain_bisimwa](https://twitter.com/gullain_bisimwa)
 - Linkedin: [Guillain bisimwa](https://www.linkedin.com/in/guillain-bisimwa-8a8b7a7b/)
 
+👤 **Venceslas Burongu**g
+
+- Github: @bvenceslas [@bvenceslas](https://github.com/bvenceslas)
+- Twitter: [@bvenceslas](https://twitter.com/bvenceslas)
+- Linkedin: [Venceslas Burongu](https://www.linkedin.com/in/venceslas-burongu-8271b519a/)
+
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!
