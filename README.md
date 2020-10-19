@@ -13,7 +13,7 @@ MongoDB stores data in a JSON-like format, Express and Node.js facilitate easy J
 
 ## Prerequisites
 
-To create the Serverless RESTFULL API, you will need to set up a Webiny project.
+To create the Serverless RESTFULL API, you will need to set up a project.
 The application supports standard CRUD (Create, Read, Update, Delete) operations.
 First, we’ll create a RESTful API server to act as an interface for querying and persisting data in a MongoDB database.
 Then, we will deploy our app to Heroku.
