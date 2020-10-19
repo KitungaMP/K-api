@@ -7,18 +7,21 @@ MongoDB stores data in a JSON-like format, Express and Node.js facilitate easy J
 
 ## Built With
 
-- Heroku: [@Heroku](https://www.heroku.com/)
+- Heroku toolbelt: [@Heroku](https://toolbelt.heroku.com/)
 - Node.js: [@Node.js](https://nodejs.org/en/)
 - MongoDB:[@MongoDB Atlas](https://docs.atlas.mongodb.com/getting-started/)
 
 ## Prerequisites
 
-To create the Serverless GraphQL API, you will need to set up a Webiny project.
+To create the Serverless RESTFULL API, you will need to set up a Webiny project.
+The application supports standard CRUD (Create, Read, Update, Delete) operations.
+First, we’ll create a RESTful API server to act as an interface for querying and persisting data in a MongoDB database.
+Then, we will deploy our app to Heroku.
 
 The base prerequisites to create a project are:
 
 1. Nodejs `npm` or `yarn`
-2. Heroku account
+2. Heroku toolbelt
 3. MongoDB database in the cloud
 
 ## How to run
