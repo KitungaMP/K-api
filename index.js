@@ -79,12 +79,15 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true})
 
   // Get maison de vente
 
-  // kmp_collection.collection("customers").find({}, { projection: { _id: 0, denomination: 1, address: 1 } }).toArray(function(err, result) {
-  //   if (err) throw err;
-  //   console.log(result);
-  //   db.close();
-  // });
-
+  app.get("/maison_vente", (request, response) => {
+    kmp_collection.find({}, { projection: { _id: 0, denomination: 1, address: 1 } }).toArray(function(err, result) {
+      if (err) {
+          return response.status(401).send({ "message": "Erreur de donnees "});
+      } else {
+          response.send(result);
+      }
+    });
+  });
 
 })
 
