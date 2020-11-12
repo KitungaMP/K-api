@@ -58,17 +58,17 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true})
     
     var maison_vente = {
         "mid": UUID.v4(),
-        "denomination" : request.denomination,
-        "address" : request.address,
-        "contact" : request.contact,
+        "denomination" : request.body.denomination,
+        "address" : request.body.address,
+        "contact" : request.body.contact,
         "date_creation" : (new Date()).getTime(),
-        "type" : request.type,
+        "type" : request.body.type,
         "etat" : 0
     }
     kmp_collection.insertOne(maison_vente)
     .then(result => {
       console.log(result)
-      return response.send(group);
+      return response.send(maison_vente);
 
     })
     .catch(error => {
@@ -76,6 +76,15 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true})
       return response.status(500).send(error);
     })
   });
+
+  // Get maison de vente
+
+  // kmp_collection.collection("customers").find({}, { projection: { _id: 0, denomination: 1, address: 1 } }).toArray(function(err, result) {
+  //   if (err) throw err;
+  //   console.log(result);
+  //   db.close();
+  // });
+
 
 })
 
