@@ -1,10 +1,15 @@
 {
   "name": "k-api",
   "version": "1.0.0",
-  "description": "Kmp Api",
+  "description": "Kmp Api, a Node.js app using Express 4",
   "main": "index.js",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "node test.js",
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -17,13 +22,23 @@
   },
   "homepage": "https://github.com/KitungaMP/K-api#readme",
   "dependencies": {
-    "cors": "^2.8.5",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "mongodb": "^2.1.6",
-    "body-parser": "^1.13.3"
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
+    "mongodb": "^3.5.5",
+    "pm2": "^4.2.3",
+    "uuid": "^8.3.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
-  }
+    "got": "^11.3.0",
+    "nodemon": "^2.0.6",
+    "tape": "^4.7.0"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ]
 }

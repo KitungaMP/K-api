@@ -26,6 +26,14 @@ The base prerequisites to create a project are:
 
 ## How to run
 
+- Step 1: Clone this repository. Just use: `git clone https://github.com/KitungaMP/K-api.git`.
+
+- Step 2: Open the project folder where the repository was downloaded. Once you are in that folder, open a terminal and make sure that it will be opened in that specific folder.
+
+- Step 3: Once you are in the terminal, just type in: `npm install`. This will install the required dependencies for this project.
+
+- Step 4: Type in `npm start` to see the magic!
+
 ## Deploy
 
 ## Ressources
