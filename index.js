@@ -43,7 +43,8 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true})
     geo { lat, long }
     date_creation,
     type ( Pharmacie , supermarket, ...)
-    etat
+    etat,
+    ville
 
   */
 
@@ -63,7 +64,8 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true})
         "contact" : request.body.contact,
         "date_creation" : (new Date()).getTime(),
         "type" : request.body.type,
-        "etat" : 0
+        "etat" : 0,
+        "ville" : request.body.ville
     }
     kmp_collection.insertOne(maison_vente)
     .then(result => {
@@ -74,6 +76,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true})
     .catch(error => {
       console.error(error)
       return response.status(500).send(error);
+
     })
   });
 
