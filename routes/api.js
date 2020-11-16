@@ -15,7 +15,7 @@ router.get('/maisons', (req, res) => {
 
 // get a maison by id
 router.get('/maisons/:mid', (req, res) => {
-    Maison.findById(maison)
+    Maison.findById(req.params.mid)
         .then(maison => res.json(maison))
         .catch(err => res.status(400).json({msg:err}));
 });
@@ -41,8 +41,8 @@ router.get('/produits', (req, res) => {
 });
 
 // get a produit by id
-router.get('/produits/:mid', (req, res) => {
-    Produit.findById(produit)
+router.get('/produits/:pid', (req, res) => {
+    Produit.findById(req.params.pid)
         .then(produit => res.json(produit))
         .catch(err => res.status(400).json({msg:err}));
 });
@@ -55,6 +55,33 @@ router.post('/produits', (req, res) => {
 
     newProduit.save()
         .then(produitSaved => res.json(produitSaved))
+        .catch(err => res.status(400).json({msg:err}));
+});
+
+// TRANSACTION ENDPOINTS
+
+// get all the produits
+router.get('/transactions', (req, res) => {
+    Produit.find()
+        .then(transactions => req.json(transactions))
+        .catch(err => res.status(400).json({msg:err}));
+});
+
+// get a produit by id
+router.get('/transactions/:tid', (req, res) => {
+    Produit.findById(transaction)
+        .then(transaction => res.json(transaction))
+        .catch(err => res.status(400).json({msg:err}));
+});
+
+// post a produit
+router.post('/transactions', (req, res) => {
+
+    const {montant, type, date} = req.body;
+    newTransaction = new Produit(req.body);
+
+    newTransaction.save()
+        .then(transactionSaved => res.json(transactionSaved))
         .catch(err => res.status(400).json({msg:err}));
 });
 
