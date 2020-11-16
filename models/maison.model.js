@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const UUID = require("uuid");
 
 const Maison = mongoose.Schema({
-    mid:{type: String, default: UUID.v4()},
+    mid: {type: String, default: UUID.v4()},
     denomination: {type: String, required: [true, 'Veuillez completer le champ denomination']},
     phone: {type: String, required: [true, 'Veuillez completer le champ phone']},
     email: {type: String, required: [true, 'Veuillez completer le champ email']},
