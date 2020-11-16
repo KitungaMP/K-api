@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const Produit = mongoose.Schema({
     pid : {type: String, default: UUID.v4()},
-    denomination : {type: String, required: [true, 'Veuillez completer le champ denomination']},
-    quantification : {type: String, required: [true, 'Veuillez completer le champ quantification']},
+    denomination : {type: String, required: [true, 'denomination ne doit pas etre vide']},
+    quantification : {type: String, required: [true, 'quantification ne doit pas etre vide']},
     prix : {type: Number, required: true},
     stock_init : {type: Number, default: 0},
     num_lot : {type: Number, required: true},

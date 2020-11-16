@@ -3,17 +3,17 @@ const UUID = require("uuid");
 
 const Maison = mongoose.Schema({
     mid: {type: String, default: UUID.v4()},
-    denomination: {type: String, required: [true, 'Veuillez completer le champ denomination']},
-    phone: {type: String, required: [true, 'Veuillez completer le champ phone']},
-    email: {type: String, required: [true, 'Veuillez completer le champ email']},
+    denomination: {type: String, required: [true, 'denomination  ne doit pas etre vide']},
+    phone: {type: String, required: [true, 'phone  ne doit pas etre vide']},
+    email: {type: String, required: [true, 'email  ne doit pas etre vide']},
     type: {type: Number, default: 0},
     province: {
-        ville: {type: String, required: [true, 'Veuillez completer le champ ville']},
-        quartier: {type: String, required: [true, 'Veuillez completer le champ quartier']},
-        avenue: {type: String, required: [true, 'Veuillez completer le champ avenue']},
-        numero: {type: Number, required: [true, 'Veuillez completer le champ avenue']}
+        ville: {type: String, required: [true, 'ville  ne doit pas etre vide']},
+        quartier: {type: String, required: [true, 'quartier  ne doit pas etre vide']},
+        avenue: {type: String, required: [true, 'avenue  ne doit pas etre vide']},
+        numero: {type: Number, required: [true, 'avenue  ne doit pas etre vide']}
     },
-    etat: {type: String, required: [true, 'Veuillez completer le champ denomination']},
+    etat: {type: Number, default: 0},
     createAt: {type: Date, default: (new Date()).getTime()}
 });
 
