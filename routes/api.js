@@ -31,5 +31,31 @@ router.post('/maisons', (req, res) => {
         .catch(err => res.status(400).json({msg:err}));
 });
 
+// PRODUITS ENDPOINTS
+
+// get all the produits
+router.get('/produits', (req, res) => {
+    Produit.find()
+        .then(produits => req.json(produits))
+        .catch(err => res.status(400).json({msg:err}));
+});
+
+// get a produit by id
+router.get('/produits/:mid', (req, res) => {
+    Produit.findById(produit)
+        .then(produit => res.json(produit))
+        .catch(err => res.status(400).json({msg:err}));
+});
+
+// post a produit
+router.post('/produits', (req, res) => {
+
+    const {denomination, quantification, prix, stock_init, num_lot, mid, etat, date_exp, etat} = req.body;
+    newMaison = new Produit(req.body);
+
+    newProduit.save()
+        .then(produitSaved => res.json(produitSaved))
+        .catch(err => res.status(400).json({msg:err}));
+});
 
 module.exports = router;
