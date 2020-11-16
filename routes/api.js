@@ -77,7 +77,7 @@ router.get('/transactions/:tid', (req, res) => {
 // post a produit
 router.post('/transactions', (req, res) => {
 
-    const {montant, type, date} = req.body;
+    const {montant, type, date, uid} = req.body;
     newTransaction = new Produit(req.body);
 
     newTransaction.save()

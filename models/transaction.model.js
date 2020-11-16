@@ -13,6 +13,7 @@ const Transaction = mongoose.Schema({
     montant : {type: Number, default: 0},
     type : {type: Number, default: 0},
     date : {type: Date, default: (new Date()).getTime()},
+    uid: {type: String, required: true}
 });
 
 module.exports = mongoose.model('transactions', Transaction);
