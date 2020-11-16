@@ -23,14 +23,6 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true})
   const db = client.db('kmp-admin')
   const kmp_collection = db.collection('one_plus')
 
-  app.post('/child', (req, res) => {
-    kmp_collection.insertOne(req.body)
-    .then(result => {
-      console.log(result)
-    })
-    .catch(error => console.error(error))
-  })
-
   // Posts
   
   // Post Maison_vente
@@ -80,6 +72,58 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true})
     })
   });
 
+  // Products
+  
+  /**
+   * pid
+   * denomination
+   * prix
+   * stock_init
+   * quantification (carton, kg, plt, pieces)
+   * date_creation
+   * num_lot
+   * mid
+   * etat
+   * date_exp
+   */
+
+  app.post("/product", (request, response) => {
+    if(!request.body.denomination){
+        return response.status(401).send({ "message": "Veiller completer la denomination de votre produit"});
+    } else if(!request.body.prix){
+        return response.status(401).send({ "message": "Veiller completer le prix de votre produit"});
+    } else if(!request.body.quantification){
+        return response.status(401).send({ "message": "Veiller completer la quantification de votre produit"});
+    }else if(!request.body.mid){
+      return response.status(401).send({ "message": "Votre produit doit appartenir a une maison de vente"});
+    }
+    
+    var product = {
+      "pid" : UUID.v4(),
+      "denomination" : request.body.denomination,
+      "prix" : request.body.prix,
+      "stock_init" : request.body.stock_init,
+      "quantification" : request.body.quantification,
+      "date_creation" : (new Date()).getTime(),
+      "num_lot" : request.body.num_lot,
+      "mid" : request.body.mid,
+      "etat" : 0,
+      "date_exp" : request.body.date_exp
+    }
+
+    kmp_collection.insertOne(product)
+    .then(result => {
+      console.log(result)
+      return response.send(product);
+
+    })
+    .catch(error => {
+      console.error(error)
+      return response.status(500).send(error);
+
+    })
+  });
+
   // Get maison de vente
 
   app.get("/maison_vente", (request, response) => {
@@ -92,13 +136,18 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true})
     });
   });
 
-})
+  // Get product
 
-app.post('/quotes', (req, res) => {
-  console.log('Hellooooooooooooooooo!')
-  console.log(req.body)
-  res.send(req.body);
-})
+  app.get("/product", (request, response) => {
+    kmp_collection.find({}, { projection: { _id: 0, denomination: 1, prix: 1 } }).toArray(function(err, result) {
+      if (err) {
+          return response.status(401).send({ "message": "Erreur de donnees "});
+      } else {
+          response.send(result);
+      }
+    });
+  });
 
+})
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
