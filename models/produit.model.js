@@ -4,6 +4,7 @@ const Produit = mongoose.Schema({
     pid : {type: String, default: UUID.v4()},
     denomination : {type: String, required: [true, 'denomination ne doit pas être vide']},
     quantification : {type: String, required: [true, 'quantification ne doit pas être vide']},
+    caracteristiques : {type: String},
     prix : {type: Number, required: true},
     stock_init : {type: Number, default: 0},
     num_lot : {type: Number, required: true},
