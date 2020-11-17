@@ -23,7 +23,7 @@ router.get('/maisons/:mid', (req, res) => {
 // post a maison
 router.post('/maisons', (req, res) => {
     
-    const {denomination, phone, email, type, ville, quartier, avenue, numero, etat} = req.body;
+    const {denomination, phone, email, type, longitude, latitude, province, ville, quartier, avenue, numero, etat} = req.body;
     newMaison = new Maison(req.body);
 
     newMaison.save()
