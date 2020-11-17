@@ -50,7 +50,7 @@ router.get('/produits/:pid', (req, res) => {
 // post a produit
 router.post('/produits', (req, res) => {
 
-    const {denomination, quantification, prix, stock_init, num_lot, mid, etat, date_exp, etat} = req.body;
+    const {denomination, quantification, couleur, poids, garantie, caracteristiques,autres_caract , prix, stock_init, num_lot, mid, etat, date_exp, etat} = req.body;
     newMaison = new Produit(req.body);
 
     newProduit.save()
