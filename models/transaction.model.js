@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+var UUID = require("uuid");
 
 /**
  * Je prefere renommer recharge en transaction
@@ -12,7 +13,8 @@ const Transaction = mongoose.Schema({
     tid : {type: String, default: UUID.v4()},
     montant : {type: Number, default: 0},
     type : {type: Number, default: 0},
-    date : {type: Date, default: (new Date()).getTime()},
+    date: {type: Date, default: Date.now()},
+    uid: {type: String, required: true}
 });
 
 module.exports = mongoose.model('transactions', Transaction);
