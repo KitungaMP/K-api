@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+var UUID = require("uuid");
 
 const Produit = mongoose.Schema({
     pid : {type: String, default: UUID.v4()},
@@ -14,8 +15,8 @@ const Produit = mongoose.Schema({
     num_lot : {type: Number, required: true},
     mid : {type: String, required: true},
     etat : {type: Number, default: 0},
-    date_exp : {type: Date, required:true},    
-    createAt : (new Date()).getTime(),
+    date_exp : {type: Date, required:true},
+    createAt: {type: Date, default: Date.now()}
 });
 
 module.exports = mongoose.model('produits', Produit);
