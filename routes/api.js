@@ -1,8 +1,14 @@
 const router = require('express').Router();
+require('../db/db')
 const Maison = require('../models/maison.model');
 const Produit = require('../models/produit.model');
 const User = require('../models/user.model');
 const Transaction = require('../models/transaction.model');
+
+
+router.get('/test', (req, res) => {
+    res.send('API works perfectly ...');
+});
 
 // MAISON ENDPOINTS
 
