@@ -1,5 +1,4 @@
 const router = require('express').Router();
-require('../db/db')
 const Maison = require('../models/maison.model');
 const Produit = require('../models/produit.model');
 const User = require('../models/user.model');
