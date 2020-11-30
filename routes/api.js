@@ -150,9 +150,6 @@ router.post('/signin', (req, res) => {
 
     User.findOne({phone}) // find user by his phone number
         .then(user => {
-            if(!user){ // the user doesn't exist
-                res.status(400).send({error_message: `Aucun compte n'est enregistré sous ce numéro ${phon}` })
-            }else{
                 bcrypt.compare(password, user.password) // comparing password
                     .then(success => {
                         if(!success) res.status(400).send({error_message: "Vous avez saisi un mot de passe incorrect"});
@@ -171,10 +168,8 @@ router.post('/signin', (req, res) => {
                         )
                     })
                     .catch(err => res.status(400).send({error_message: err}));
-            }
-            
         })
-        .catch(err => res.status(400).send({error_message: err}));        
+        .catch(err => res.status(400).send({error_message: `Aucun compte n'est enregistré sous ce numéro`}));        
 });
 
 module.exports = router;
