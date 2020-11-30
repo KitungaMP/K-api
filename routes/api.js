@@ -14,15 +14,15 @@ router.get('/test', (req, res) => {
 // get all the maisons
 router.get('/maisons', (req, res) => {
     Maison.find()
-        .then(maisons => req.json(maisons))
-        .catch(err => res.status(400).json({msg:err}));
+        .then(maisons => res.json(maisons))
+        .catch(err => res.status(400).json({error_message:err}));
 });
 
 // get a maison by id
 router.get('/maisons/:mid', (req, res) => {
     Maison.findById(req.params.mid)
         .then(maison => res.json(maison))
-        .catch(err => res.status(400).json({msg:err}));
+        .catch(err => res.status(400).json({error_message:err}));
 });
 
 // post a maison
@@ -33,7 +33,7 @@ router.post('/maisons', (req, res) => {
 
     newMaison.save()
         .then(maisonSaved => res.json(maisonSaved))
-        .catch(err => res.status(400).json({msg:err}));
+        .catch(err => res.status(400).json({error_message:err}));
 });
 
 // PRODUITS ENDPOINTS
@@ -41,53 +41,53 @@ router.post('/maisons', (req, res) => {
 // get all the produits
 router.get('/produits', (req, res) => {
     Produit.find()
-        .then(produits => req.json(produits))
-        .catch(err => res.status(400).json({msg:err}));
+        .then(produits => res.json(produits))
+        .catch(err => res.status(400).json({error_message:err}));
 });
 
 // get a produit by id
 router.get('/produits/:pid', (req, res) => {
     Produit.findById(req.params.pid)
         .then(produit => res.json(produit))
-        .catch(err => res.status(400).json({msg:err}));
+        .catch(err => res.status(400).json({error_message:err}));
 });
 
 // post a produit
 router.post('/produits', (req, res) => {
 
     const {denomination, quantification, couleur, poids, garantie, caracteristiques,autres_caract , prix, stock_init, num_lot, mid, etat, date_exp} = req.body;
-    newMaison = new Produit(req.body);
+    newProduit = new Produit(req.body);
 
     newProduit.save()
         .then(produitSaved => res.json(produitSaved))
-        .catch(err => res.status(400).json({msg:err}));
+        .catch(err => res.status(400).json({error_message:err}));
 });
 
 // TRANSACTION ENDPOINTS
 
-// get all the produits
+// get all the transactions
 router.get('/transactions', (req, res) => {
-    Produit.find()
-        .then(transactions => req.json(transactions))
-        .catch(err => res.status(400).json({msg:err}));
+    Transaction.find()
+        .then(transactions => res.json(transactions))
+        .catch(err => res.status(400).json({error_message:err}));
 });
 
-// get a produit by id
+// get a transaction by id
 router.get('/transactions/:tid', (req, res) => {
-    Produit.findById(transaction)
+    Transaction.findById(req.params.tid)
         .then(transaction => res.json(transaction))
-        .catch(err => res.status(400).json({msg:err}));
+        .catch(err => res.status(400).json({error_message:err}));
 });
 
-// post a produit
+// post a transaction
 router.post('/transactions', (req, res) => {
 
     const {montant, type, date, uid} = req.body;
-    newTransaction = new Produit(req.body);
+    newTransaction = new Transaction(req.body);
 
     newTransaction.save()
         .then(transactionSaved => res.json(transactionSaved))
-        .catch(err => res.status(400).json({msg:err}));
+        .catch(err => res.status(400).json({error_message:err}));
 });
 
 module.exports = router;
