@@ -3,6 +3,8 @@ const Maison = require('../models/maison.model');
 const Produit = require('../models/produit.model');
 const User = require('../models/user.model');
 const Transaction = require('../models/transaction.model');
+var bcrypt = require("bcryptjs");
+var jwt = require('jsonwebtoken');
 
 
 router.get('/test', (req, res) => {
@@ -88,6 +90,50 @@ router.post('/transactions', (req, res) => {
     newTransaction.save()
         .then(transactionSaved => res.json(transactionSaved))
         .catch(err => res.status(400).json({error_message:err}));
+});
+
+// register a unser
+
+router.post('/register', (req, res) => {
+    const { phone , password } = req.body;
+    User.findOne({phone})
+        .then(phon => {
+            if(phon){
+                res.status(400).send({error_message: 'Un autre utilisateur existe sur ce numero de telephone'});
+            }else{
+                const newUser = new User({ phone, password });
+
+                // chiffrer le password
+                bcrypt.genSalt(10, (err, salt) => {
+                    if(err) throw err;
+                    bcrypt.hash(newUser.password, salt, (err, hash) => {
+                        if(err) throw err;
+                        newUser.password = hash;
+
+                        newUser.save()
+                            .then(user => {
+                                jwt.sign(
+                                    {id: user.id},
+                                    process.env.SECRET_KEY,
+                                    {expiresIn: 3600},
+                                    (err, token) => {
+                                        if(err) throw err;
+                                        res.json({
+                                            token, 
+                                            user:{
+                                                phone: user.phone,
+                                                password: user.password
+                                            }
+                                        });
+                                    }
+                                 )
+                            })
+                            .catch(err => res.status(400).send({error_message: err}));
+                    });
+                });
+            }
+        })
+        .catch(err => res.status(400).send({error_message: err}));
 });
 
 module.exports = router;
