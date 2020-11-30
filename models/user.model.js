@@ -3,6 +3,7 @@ var UUID = require("uuid");
 
 const User = mongoose.Schema({
     uid : {type: String, default: UUID.v4()},
+    fullname : {type: String},
     phone : {type: String, required: [true, 'phone ne doit pas être vide']},
     password : {type: String, required: [true, 'password  ne doit pas être vide']},
     idCard: {type: String},
