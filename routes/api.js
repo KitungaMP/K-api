@@ -136,4 +136,43 @@ router.post('/register', (req, res) => {
         .catch(err => res.status(400).send({error_message: err}));
 });
 
+// sign in
+router.post('/signin', (req, res) => {
+    const { phone, password } = req.body;
+
+    if(!phone || !password) {
+        res.status(400).send({error_message: "Le phone ou le mot de passe ne doivent pas être vide"});
+    }
+
+    User.findOne({phone})
+        .then(user => {
+            if(!user){
+                res.status(400).send({error_message: `Aucun compte n'est enregistré sous ce numéro ${phon}` })
+            }else{
+                bcrypt.compare(password, user.password)
+                    .then(success => {
+                        if(!success) res.status(400).send({error_message: "Vous avez saisi un mot de passe incorrect"});
+
+                        jwt.sign(
+                            {id: user.id},
+                            process.env.SECRET_KEY,
+                            {expiresIn: 3600},
+                            (err, token) => {
+                                if(err) throw err;
+                                res.json({
+                                    token
+                                })
+                            }
+                        )
+                    })
+                    .catch(err => res.status(400).send({error_message: err}));
+            }
+                
+            
+            
+        })
+        .catch(err => res.status(400).send({error_message: err}));
+        
+})
+
 module.exports = router;

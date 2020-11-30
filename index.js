@@ -6,7 +6,6 @@ const app = express()
 require('./db/db')
 
 var UUID = require("uuid");
-var BCrypt = require("bcryptjs");
 
 
 const PORT = process.env.PORT || 5000
