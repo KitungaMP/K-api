@@ -96,28 +96,30 @@ router.post('/transactions', (req, res) => {
 
 router.post('/register', (req, res) => {
     const { phone , password } = req.body;
-    User.findOne({phone})
+    User.findOne({phone}) // find the user by phone
         .then(phon => {
-            if(phon){
-                res.status(400).send({error_message: 'Un autre utilisateur existe sur ce numero de telephone'});
-            }else{
+            if(!phon){ // if the user doen't exit with this phone number 
+                res.status(400).send({error_message: 'Un autre utilisateur existe sur ce numéro de téléphone'});
+            }else{ // we get the user who has that phone number
                 const newUser = new User({ phone, password });
 
                 // chiffrer le password
                 bcrypt.genSalt(10, (err, salt) => {
                     if(err) throw err;
-                    bcrypt.hash(newUser.password, salt, (err, hash) => {
+                    bcrypt.hash(newUser.password, salt, (err, hash) => { // hashing the password
                         if(err) throw err;
-                        newUser.password = hash;
+                        newUser.password = hash; // passing the hashed password to the user model
 
                         newUser.save()
                             .then(user => {
-                                jwt.sign(
+                                // process for jwt generating token 
+                                jwt.sign( 
                                     {id: user.id},
                                     process.env.SECRET_KEY,
                                     {expiresIn: 3600},
                                     (err, token) => {
                                         if(err) throw err;
+                                        // return token, phone and password
                                         res.json({
                                             token, 
                                             user:{
@@ -140,19 +142,20 @@ router.post('/register', (req, res) => {
 router.post('/signin', (req, res) => {
     const { phone, password } = req.body;
 
-    if(!phone || !password) {
+    if(!phone || !password) { // if the fields remain empty
         res.status(400).send({error_message: "Le phone ou le mot de passe ne doivent pas être vide"});
     }
 
-    User.findOne({phone})
+    User.findOne({phone}) // find user by his phone number
         .then(user => {
-            if(!user){
+            if(!user){ // the user doesn't exist
                 res.status(400).send({error_message: `Aucun compte n'est enregistré sous ce numéro ${phon}` })
             }else{
-                bcrypt.compare(password, user.password)
+                bcrypt.compare(password, user.password) // comparing password
                     .then(success => {
                         if(!success) res.status(400).send({error_message: "Vous avez saisi un mot de passe incorrect"});
 
+                        // generating token when the login is successfull
                         jwt.sign(
                             {id: user.id},
                             process.env.SECRET_KEY,
@@ -167,12 +170,9 @@ router.post('/signin', (req, res) => {
                     })
                     .catch(err => res.status(400).send({error_message: err}));
             }
-                
-            
             
         })
-        .catch(err => res.status(400).send({error_message: err}));
-        
-})
+        .catch(err => res.status(400).send({error_message: err}));        
+});
 
 module.exports = router;
