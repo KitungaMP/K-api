@@ -98,7 +98,7 @@ router.post('/register', (req, res) => {
     const { phone , password } = req.body;
     User.findOne({phone}) // find the user by phone
         .then(phon => {
-            if(!phon){ // if the user doen't exit with this phone number 
+            if(phon){ // if the user doen't exit with this phone number 
                 res.status(400).send({error_message: 'Un autre utilisateur existe sur ce numéro de téléphone'});
             }else{ // we get the user who has that phone number
                 const newUser = new User({ phone, password });
