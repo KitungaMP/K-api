@@ -95,13 +95,14 @@ router.post('/transactions', (req, res) => {
 // register a unser
 
 router.post('/register', (req, res) => {
-    const { phone , password } = req.body;
+    const { fullname, phone , password } = req.body;
+    if(!fullname) res.status(400).send({error_message: 'Le nom complet de doit pas être vide'});
     User.findOne({phone}) // find the user by phone
         .then(phon => {
             if(phon){ // if the user doen't exit with this phone number 
                 res.status(400).send({error_message: 'Un autre utilisateur existe sur ce numéro de téléphone'});
             }else{ // we get the user who has that phone number
-                const newUser = new User({ phone, password });
+                const newUser = new User({ fullname, phone, password });
 
                 // chiffrer le password
                 bcrypt.genSalt(10, (err, salt) => {
@@ -123,6 +124,7 @@ router.post('/register', (req, res) => {
                                         res.json({
                                             token, 
                                             user:{
+                                                fullname: user.fullname,
                                                 phone: user.phone,
                                                 password: user.password
                                             }
@@ -148,9 +150,6 @@ router.post('/signin', (req, res) => {
 
     User.findOne({phone}) // find user by his phone number
         .then(user => {
-            if(!user){ // the user doesn't exist
-                res.status(400).send({error_message: `Aucun compte n'est enregistré sous ce numéro ${phon}` })
-            }else{
                 bcrypt.compare(password, user.password) // comparing password
                     .then(success => {
                         if(!success) res.status(400).send({error_message: "Vous avez saisi un mot de passe incorrect"});
@@ -169,10 +168,8 @@ router.post('/signin', (req, res) => {
                         )
                     })
                     .catch(err => res.status(400).send({error_message: err}));
-            }
-            
         })
-        .catch(err => res.status(400).send({error_message: err}));        
+        .catch(err => res.status(400).send({error_message: `Aucun compte n'est enregistré sous ce numéro`}));        
 });
 
 module.exports = router;
