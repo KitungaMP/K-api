@@ -183,7 +183,7 @@ router.get('/achats', (req, res) => {
         .catch(err => res.status(400).json({error_message:err}));
 });
 
-// get a maison by id
+// get a achat by id
 router.get('/achats/:aid', (req, res) => {
     Achat.findById(req.params.aid)
         .then(achat => res.json(achat))
@@ -200,5 +200,33 @@ router.post('/achats', (req, res) => {
         .then(achatSaved => res.json(achatSaved))
         .catch(err => res.status(400).json({error_message:err}));
 });
+
+// CARD ENDPOINTS
+
+// get all the cards
+router.get('/cards', (req, res) => {
+    Card.find()
+        .then(cards => res.json(cards))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
+// get a card by id
+router.get('/cards/:cid', (req, res) => {
+    Card.findById(req.params.cid)
+        .then(card => res.json(card))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
+// post a card
+router.post('/cards', (req, res) => {
+    
+    const {id_card, uid, montant, date_expiration } = req.body;
+    newCard = new Card(req.body);
+
+    newCard.save()
+        .then(cardSaved => res.json(cardSaved))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
 
 module.exports = router;
