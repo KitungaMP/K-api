@@ -238,7 +238,7 @@ router.get('/paniers', (req, res) => {
         .catch(err => res.status(400).json({error_message:err}));
 });
 
-// get a card by id
+// get a panier by id
 router.get('/paniers/:cid', (req, res) => {
     Panier.findById(req.params.cid)
         .then(panier => res.json(panier))
