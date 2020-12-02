@@ -3,6 +3,9 @@ const Maison = require('../models/maison.model');
 const Produit = require('../models/produit.model');
 const User = require('../models/user.model');
 const Transaction = require('../models/transaction.model');
+const Achat = require('../models/achat.model');
+const Card = require('../models/card.model');
+const Panier = require('../models/panier.model');
 var bcrypt = require("bcryptjs");
 var jwt = require('jsonwebtoken');
 
@@ -169,6 +172,33 @@ router.post('/signin', (req, res) => {
                     .catch(err => res.status(400).send({error_message: err}));
         })
         .catch(err => res.status(400).send({error_message: `Aucun compte n'est enregistré sous ce numéro`}));        
+});
+
+// ACHATS ENDPOINTS
+
+// get all the achats
+router.get('/achats', (req, res) => {
+    Achat.find()
+        .then(achats => res.json(achats))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
+// get a maison by id
+router.get('/achats/:aid', (req, res) => {
+    Achat.findById(req.params.aid)
+        .then(achat => res.json(achat))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
+// post a achat
+router.post('/achats', (req, res) => {
+    
+    const {paid, cid, montant, date, confirm } = req.body;
+    newAchat = new Achat(req.body);
+
+    newAchat.save()
+        .then(achatSaved => res.json(achatSaved))
+        .catch(err => res.status(400).json({error_message:err}));
 });
 
 module.exports = router;
