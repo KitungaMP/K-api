@@ -12,6 +12,7 @@ var UUID = require("uuid");
 const Transaction = mongoose.Schema({
     tid : {type: String, default: UUID.v4()},
     montant : {type: Number, default: 0},
+    somme : {type: Number, default: 0},
     type : {type: Number, default: 0},
     date: {type: Date, default: Date.now()},
     uid_sender: {type: String, required: [true, "L'utilisateur ne peut être nul"]},
