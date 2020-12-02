@@ -30,7 +30,7 @@ router.get('/maisons/:mid', (req, res) => {
 // post a maison
 router.post('/maisons', (req, res) => {
     
-    const {denomination, phone, email, type, longitude, latitude, province, ville, quartier, avenue, numero, etat} = req.body;
+    const {denomination, phone, email, type, longitude, latitude, province, ville, quartier, avenue, numero, etat, id_card} = req.body;
     newMaison = new Maison(req.body);
 
     newMaison.save()
@@ -92,8 +92,7 @@ router.post('/transactions', (req, res) => {
         .catch(err => res.status(400).json({error_message:err}));
 });
 
-// register a unser
-
+// register a user
 router.post('/register', (req, res) => {
     const { fullname, phone , password } = req.body;
     if(!fullname) res.status(400).send({error_message: 'Le nom complet de doit pas être vide'});
