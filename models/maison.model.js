@@ -15,6 +15,7 @@ const Maison = mongoose.Schema({
     avenue: {type: String},
     numero: {type: Number},
     etat: {type: Number, default: 0},
+    id_card: {type: String, required: [true, 'L\'ID Card ne doit pas être vide']},
     createAt: {type: Date, default: Date.now()}
 });
 
