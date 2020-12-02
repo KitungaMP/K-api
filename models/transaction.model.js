@@ -14,7 +14,8 @@ const Transaction = mongoose.Schema({
     montant : {type: Number, default: 0},
     type : {type: Number, default: 0},
     date: {type: Date, default: Date.now()},
-    uid: {type: String, required: true}
+    uid_sender: {type: String, required: [true, "L'utilisateur ne peut être nul"]},
+    uid_receiver: {type: String, required: [true, "L'utilisateur ne peut être nul"]}
 });
 
 module.exports = mongoose.model('transactions', Transaction);
