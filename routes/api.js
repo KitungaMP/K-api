@@ -84,7 +84,7 @@ router.get('/transactions/:tid', (req, res) => {
 // post a transaction
 router.post('/transactions', (req, res) => {
 
-    const {montant, type, date, uid} = req.body;
+    const {montant, somme, type, date, uid_sender, uid_receiver} = req.body;
     newTransaction = new Transaction(req.body);
 
     newTransaction.save()
