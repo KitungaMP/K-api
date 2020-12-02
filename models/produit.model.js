@@ -16,6 +16,7 @@ const Produit = mongoose.Schema({
     mid : {type: String, required: true},
     etat : {type: Number, default: 0},
     date_exp : {type: Date, required:true},
+    id_card: {type: String, required: [true, 'L\'ID Card ne doit pas être vide']},
     createAt: {type: Date, default: Date.now()}
 });
 
