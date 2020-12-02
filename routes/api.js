@@ -229,4 +229,31 @@ router.post('/cards', (req, res) => {
 });
 
 
+// PANIER ENDPOINTS
+
+// get all the paniers
+router.get('/paniers', (req, res) => {
+    Panier.find()
+        .then(paniers => res.json(paniers))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
+// get a card by id
+router.get('/paniers/:cid', (req, res) => {
+    Panier.findById(req.params.cid)
+        .then(panier => res.json(panier))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
+// post a Panier
+router.post('/paniers', (req, res) => {
+    
+    const {quantity, pid, date } = req.body;
+    newPanier = new Panier(req.body);
+
+    newPanier.save()
+        .then(panierSaved => res.json(panierSaved))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
 module.exports = router;
