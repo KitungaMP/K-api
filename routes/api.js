@@ -3,6 +3,9 @@ const Maison = require('../models/maison.model');
 const Produit = require('../models/produit.model');
 const User = require('../models/user.model');
 const Transaction = require('../models/transaction.model');
+const Achat = require('../models/achat.model');
+const Card = require('../models/card.model');
+const Panier = require('../models/panier.model');
 var bcrypt = require("bcryptjs");
 var jwt = require('jsonwebtoken');
 
@@ -30,7 +33,7 @@ router.get('/maisons/:mid', (req, res) => {
 // post a maison
 router.post('/maisons', (req, res) => {
     
-    const {denomination, phone, email, type, longitude, latitude, province, ville, quartier, avenue, numero, etat} = req.body;
+    const {denomination, phone, email, type, longitude, latitude, province, ville, quartier, avenue, numero, etat, id_card} = req.body;
     newMaison = new Maison(req.body);
 
     newMaison.save()
@@ -84,7 +87,7 @@ router.get('/transactions/:tid', (req, res) => {
 // post a transaction
 router.post('/transactions', (req, res) => {
 
-    const {montant, type, date, uid} = req.body;
+    const {montant, somme, type, date, uid_sender, uid_receiver} = req.body;
     newTransaction = new Transaction(req.body);
 
     newTransaction.save()
@@ -92,8 +95,7 @@ router.post('/transactions', (req, res) => {
         .catch(err => res.status(400).json({error_message:err}));
 });
 
-// register a unser
-
+// register a user
 router.post('/register', (req, res) => {
     const { fullname, phone , password } = req.body;
     if(!fullname) res.status(400).send({error_message: 'Le nom complet de doit pas être vide'});
@@ -170,6 +172,88 @@ router.post('/signin', (req, res) => {
                     .catch(err => res.status(400).send({error_message: err}));
         })
         .catch(err => res.status(400).send({error_message: `Aucun compte n'est enregistré sous ce numéro`}));        
+});
+
+// ACHATS ENDPOINTS
+
+// get all the achats
+router.get('/achats', (req, res) => {
+    Achat.find()
+        .then(achats => res.json(achats))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
+// get a achat by id
+router.get('/achats/:aid', (req, res) => {
+    Achat.findById(req.params.aid)
+        .then(achat => res.json(achat))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
+// post a achat
+router.post('/achats', (req, res) => {
+    
+    const {paid, cid, montant, date, confirm } = req.body;
+    newAchat = new Achat(req.body);
+
+    newAchat.save()
+        .then(achatSaved => res.json(achatSaved))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
+// CARD ENDPOINTS
+
+// get all the cards
+router.get('/cards', (req, res) => {
+    Card.find()
+        .then(cards => res.json(cards))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
+// get a card by id
+router.get('/cards/:cid', (req, res) => {
+    Card.findById(req.params.cid)
+        .then(card => res.json(card))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
+// post a card
+router.post('/cards', (req, res) => {
+    
+    const {id_card, uid, montant, date_expiration } = req.body;
+    newCard = new Card(req.body);
+
+    newCard.save()
+        .then(cardSaved => res.json(cardSaved))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
+
+// PANIER ENDPOINTS
+
+// get all the paniers
+router.get('/paniers', (req, res) => {
+    Panier.find()
+        .then(paniers => res.json(paniers))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
+// get a panier by id
+router.get('/paniers/:cid', (req, res) => {
+    Panier.findById(req.params.cid)
+        .then(panier => res.json(panier))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
+// post a Panier
+router.post('/paniers', (req, res) => {
+    
+    const {quantity, pid, date } = req.body;
+    newPanier = new Panier(req.body);
+
+    newPanier.save()
+        .then(panierSaved => res.json(panierSaved))
+        .catch(err => res.status(400).json({error_message:err}));
 });
 
 module.exports = router;
