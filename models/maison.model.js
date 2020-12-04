@@ -10,6 +10,7 @@ const Maison = mongoose.Schema({
     longitude: {type: Number},
     latitude: {type: Number},
     province: {type: String, required: [true, 'province ne doit pas être vide']},
+    commune: {type: String, required: [true, 'commune ne doit pas être vide']},
     ville: {type: String, required: [true, 'ville  ne doit pas être vide']},
     quartier: {type: String, required: [true, 'quartier  ne doit pas être vide']},
     avenue: {type: String},
