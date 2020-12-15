@@ -11,7 +11,12 @@ const User = mongoose.Schema({
     type : {type: Number, default: 0}, // 0 pour client 1 pour maison 9 pour system admin 
     default_address: {type: String}, // in the UI we can have the 3 inputs: Commune, Avenue_and_number and even quartier kisha on les concatene pour former the default address
     birthday : {type: String},
-    adresse: {type: String}, // on pourra diviser ce champ apres
+    province: {type: String},
+    commune: {type: String},
+    ville: {type: String},
+    quartier: {type: String},
+    avenue: {type: String},
+    numero: {type: Number},
     etat : {type: Number, default: 0}
 });
 

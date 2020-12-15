@@ -10,33 +10,33 @@ var bcrypt = require("bcryptjs");
 var jwt = require('jsonwebtoken');
 
 
-router.get('/test', (req, res) => {
-    res.send('API works perfectly ...');
+router.get('/test', async (req, res) => {
+    await res.send('API works perfectly ...');
 });
 
 // MAISON ENDPOINTS
 
 // get all the maisons
-router.get('/maisons', (req, res) => {
-    Maison.find()
+router.get('/maisons', async (req, res) => {
+    await Maison.find()
         .then(maisons => res.json(maisons))
         .catch(err => res.status(400).json({error_message:err}));
 });
 
 // get a maison by id
-router.get('/maisons/:mid', (req, res) => {
-    Maison.findById(req.params.mid)
+router.get('/maisons/:mid', async (req, res) => {
+    await Maison.findById(req.params.mid)
         .then(maison => res.json(maison))
         .catch(err => res.status(400).json({error_message:err}));
 });
 
 // post a maison
-router.post('/maisons', (req, res) => {
+router.post('/maisons', async (req, res) => {
     
     const {denomination, phone, email, type, longitude, latitude, province, ville, quartier, avenue, numero, etat, id_card} = req.body;
     newMaison = new Maison(req.body);
 
-    newMaison.save()
+    await newMaison.save()
         .then(maisonSaved => res.json(maisonSaved))
         .catch(err => res.status(400).json({error_message:err}));
 });
@@ -44,26 +44,26 @@ router.post('/maisons', (req, res) => {
 // PRODUITS ENDPOINTS
 
 // get all the produits
-router.get('/produits', (req, res) => {
-    Produit.find()
+router.get('/produits', async (req, res) => {
+    await Produit.find()
         .then(produits => res.json(produits))
         .catch(err => res.status(400).json({error_message:err}));
 });
 
 // get a produit by id
-router.get('/produits/:pid', (req, res) => {
-    Produit.findById(req.params.pid)
+router.get('/produits/:pid', async (req, res) => {
+    await Produit.findById(req.params.pid)
         .then(produit => res.json(produit))
         .catch(err => res.status(400).json({error_message:err}));
 });
 
 // post a produit
-router.post('/produits', (req, res) => {
+router.post('/produits', async (req, res) => {
 
     const {denomination, quantification, couleur, poids, garantie, caracteristiques,autres_caract , prix, stock_init, num_lot, mid, etat, date_exp} = req.body;
     newProduit = new Produit(req.body);
 
-    newProduit.save()
+    await newProduit.save()
         .then(produitSaved => res.json(produitSaved))
         .catch(err => res.status(400).json({error_message:err}));
 });
@@ -71,35 +71,35 @@ router.post('/produits', (req, res) => {
 // TRANSACTION ENDPOINTS
 
 // get all the transactions
-router.get('/transactions', (req, res) => {
-    Transaction.find()
+router.get('/transactions', async (req, res) => {
+    await Transaction.find()
         .then(transactions => res.json(transactions))
         .catch(err => res.status(400).json({error_message:err}));
 });
 
 // get a transaction by id
-router.get('/transactions/:tid', (req, res) => {
-    Transaction.findById(req.params.tid)
+router.get('/transactions/:tid', async (req, res) => {
+    await Transaction.findById(req.params.tid)
         .then(transaction => res.json(transaction))
         .catch(err => res.status(400).json({error_message:err}));
 });
 
 // post a transaction
-router.post('/transactions', (req, res) => {
+router.post('/transactions', async (req, res) => {
 
     const {montant, somme, type, date, uid_sender, uid_receiver} = req.body;
     newTransaction = new Transaction(req.body);
 
-    newTransaction.save()
+    await newTransaction.save()
         .then(transactionSaved => res.json(transactionSaved))
         .catch(err => res.status(400).json({error_message:err}));
 });
 
 // register a user
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
     const { fullname, phone , password } = req.body;
     if(!fullname) res.status(400).send({error_message: 'Le nom complet de doit pas être vide'});
-    User.findOne({phone}) // find the user by phone
+    await User.findOne({phone}) // find the user by phone
         .then(phon => {
             if(phon){ // if the user doen't exit with this phone number 
                 res.status(400).send({error_message: 'Un autre utilisateur existe sur ce numéro de téléphone'});
@@ -143,14 +143,14 @@ router.post('/register', (req, res) => {
 });
 
 // sign in
-router.post('/signin', (req, res) => {
+router.post('/signin', async (req, res) => {
     const { phone, password } = req.body;
 
     if(!phone || !password) { // if the fields remain empty
         res.status(400).send({error_message: "Le phone ou le mot de passe ne doivent pas être vide"});
     }
 
-    User.findOne({phone}) // find user by his phone number
+    await User.findOne({phone}) // find user by his phone number
         .then(user => {
                 bcrypt.compare(password, user.password) // comparing password
                     .then(success => {
@@ -174,29 +174,39 @@ router.post('/signin', (req, res) => {
         .catch(err => res.status(400).send({error_message: `Aucun compte n'est enregistré sous ce numéro`}));        
 });
 
+// update user profile
+
+router.put('/profile/:uid', async (req, res) => {
+    const {fullname, sexe, phone , default_address, birthday, province, ville, quartier, avenue, numero} = req.body;
+    
+    await User.findByIdAndUpdate(req.params.uid, req.body)
+        .then(() => res.send('Votre profile a été mis à jour avec succès.'))
+        .catch(err => res.status(400).send({error_message: err}));
+});
+
 // ACHATS ENDPOINTS
 
 // get all the achats
-router.get('/achats', (req, res) => {
-    Achat.find()
+router.get('/achats', async (req, res) => {
+    await Achat.find()
         .then(achats => res.json(achats))
         .catch(err => res.status(400).json({error_message:err}));
 });
 
 // get a achat by id
-router.get('/achats/:aid', (req, res) => {
-    Achat.findById(req.params.aid)
+router.get('/achats/:aid', async (req, res) => {
+    await Achat.findById(req.params.aid)
         .then(achat => res.json(achat))
         .catch(err => res.status(400).json({error_message:err}));
 });
 
 // post a achat
-router.post('/achats', (req, res) => {
+router.post('/achats', async (req, res) => {
     
     const {paid, cid, montant, date, confirm } = req.body;
     newAchat = new Achat(req.body);
 
-    newAchat.save()
+    await newAchat.save()
         .then(achatSaved => res.json(achatSaved))
         .catch(err => res.status(400).json({error_message:err}));
 });
@@ -204,26 +214,26 @@ router.post('/achats', (req, res) => {
 // CARD ENDPOINTS
 
 // get all the cards
-router.get('/cards', (req, res) => {
-    Card.find()
+router.get('/cards', async (req, res) => {
+    await Card.find()
         .then(cards => res.json(cards))
         .catch(err => res.status(400).json({error_message:err}));
 });
 
 // get a card by id
-router.get('/cards/:cid', (req, res) => {
-    Card.findById(req.params.cid)
+router.get('/cards/:cid', async (req, res) => {
+    await Card.findById(req.params.cid)
         .then(card => res.json(card))
         .catch(err => res.status(400).json({error_message:err}));
 });
 
 // post a card
-router.post('/cards', (req, res) => {
+router.post('/cards', async (req, res) => {
     
     const {id_card, uid, montant, date_expiration } = req.body;
     newCard = new Card(req.body);
 
-    newCard.save()
+    await newCard.save()
         .then(cardSaved => res.json(cardSaved))
         .catch(err => res.status(400).json({error_message:err}));
 });
@@ -232,26 +242,26 @@ router.post('/cards', (req, res) => {
 // PANIER ENDPOINTS
 
 // get all the paniers
-router.get('/paniers', (req, res) => {
-    Panier.find()
+router.get('/paniers', async (req, res) => {
+    await Panier.find()
         .then(paniers => res.json(paniers))
         .catch(err => res.status(400).json({error_message:err}));
 });
 
 // get a panier by id
-router.get('/paniers/:cid', (req, res) => {
-    Panier.findById(req.params.cid)
+router.get('/paniers/:cid', async (req, res) => {
+    await Panier.findById(req.params.cid)
         .then(panier => res.json(panier))
         .catch(err => res.status(400).json({error_message:err}));
 });
 
 // post a Panier
-router.post('/paniers', (req, res) => {
+router.post('/paniers', async (req, res) => {
     
     const {quantity, pid, date } = req.body;
     newPanier = new Panier(req.body);
 
-    newPanier.save()
+    await newPanier.save()
         .then(panierSaved => res.json(panierSaved))
         .catch(err => res.status(400).json({error_message:err}));
 });
