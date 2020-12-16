@@ -41,6 +41,16 @@ router.post('/maisons', async (req, res) => {
         .catch(err => res.status(400).json({error_message:err}));
 });
 
+// put maison
+router.put('/maisons/:mid', async (req, res) => {
+
+    const {denomination, phone, email, type, longitude, latitude, province, ville, quartier, avenue, numero, etat, id_card} = req.body;
+    
+    Maison.findByIdAndUpdate(req.params.mid, req.body)
+        .then(() => res.send('Votre maison a été mise à jour avec succès.'))
+        .catch(err => res.status(400).send({error_message: err}));
+});
+
 // PRODUITS ENDPOINTS
 
 // get all the produits
@@ -76,7 +86,7 @@ router.put('/produits/:pid', async (req, res) => {
     await Produit.findByIdAndUpdate(req.params.pid, req.body)
         .then(() => res.send('Votre produit a été mis à jour avec succès.'))
         .catch(err => res.status(400).send({error_message: err}));
-})
+});
 
 // TRANSACTION ENDPOINTS
 
