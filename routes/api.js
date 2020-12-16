@@ -238,6 +238,14 @@ router.post('/cards', async (req, res) => {
         .catch(err => res.status(400).json({error_message:err}));
 });
 
+router.put('/cards/:cid', async (req, res) => {
+    const {id_card, uid, montant, date_expiration } = req.body;
+
+    Card.findByIdAndUpdate(req.params.cid, req.body)
+        .then(() => res.send('Votre carte a été mise à jour avec succès.'))
+        .catch(err => res.status(400).send({error_message: err}));
+})
+
 
 // PANIER ENDPOINTS
 
