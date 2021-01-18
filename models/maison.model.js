@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-var UUID = require("uuid");
 
 const Maison = mongoose.Schema({
-    mid: {type: String, default: UUID.v4()},
     denomination: {type: String, required: [true, 'denomination ne doit pas être vide']},
     phone: {type: String, required: [true, 'phone  ne doit pas être vide']},
     email: {type: String, required: [true, 'email  ne doit pas être vide']},
