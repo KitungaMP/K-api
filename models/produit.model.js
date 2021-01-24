@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-var UUID = require("uuid");
 
 const Produit = mongoose.Schema({
-    pid : {type: String, default: UUID.v4()},
     denomination : {type: String, required: [true, 'denomination ne doit pas être vide']},
     quantification : {type: String, required: [true, 'quantification ne doit pas être vide']},
     couleur : {type: String},

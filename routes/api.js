@@ -24,8 +24,8 @@ router.get('/maisons', async (req, res) => {
 });
 
 // get a maison by id
-router.get('/maisons/:mid', async (req, res) => {
-    await Maison.findById(req.params.mid)
+router.get('/maisons/:id', async (req, res) => {
+    await Maison.findById(req.params.id)
         .then(maison => res.json(maison))
         .catch(err => res.status(400).json({error_message:err}));
 });
@@ -42,11 +42,11 @@ router.post('/maisons', async (req, res) => {
 });
 
 // put maison
-router.put('/maisons/:mid', async (req, res) => {
+router.put('/maisons/:id', async (req, res) => {
 
     const {denomination, phone, email, type, longitude, latitude, province, ville, quartier, avenue, numero, etat, id_card} = req.body;
     
-    Maison.findByIdAndUpdate(req.params.mid, req.body)
+    Maison.findByIdAndUpdate(req.params.id, req.body)
         .then(() => res.send('Votre maison a été mise à jour avec succès.'))
         .catch(err => res.status(400).send({error_message: err}));
 });
@@ -61,8 +61,8 @@ router.get('/produits', async (req, res) => {
 });
 
 // get a produit by id
-router.get('/produits/:pid', async (req, res) => {
-    await Produit.findById(req.params.pid)
+router.get('/produits/:id', async (req, res) => {
+    await Produit.findById(req.params.id)
         .then(produit => res.json(produit))
         .catch(err => res.status(400).json({error_message:err}));
 });
@@ -79,11 +79,11 @@ router.post('/produits', async (req, res) => {
 });
 
 // put a produit
-router.put('/produits/:pid', async (req, res) => {
+router.put('/produits/:id', async (req, res) => {
 
     const {denomination, quantification, couleur, poids, garantie, caracteristiques,autres_caract , prix, stock_init, num_lot, mid, etat, date_exp} = req.body;
     
-    await Produit.findByIdAndUpdate(req.params.pid, req.body)
+    await Produit.findByIdAndUpdate(req.params.id, req.body)
         .then(() => res.send('Votre produit a été mis à jour avec succès.'))
         .catch(err => res.status(400).send({error_message: err}));
 });
@@ -98,8 +98,8 @@ router.get('/transactions', async (req, res) => {
 });
 
 // get a transaction by id
-router.get('/transactions/:tid', async (req, res) => {
-    await Transaction.findById(req.params.tid)
+router.get('/transactions/:id', async (req, res) => {
+    await Transaction.findById(req.params.id)
         .then(transaction => res.json(transaction))
         .catch(err => res.status(400).json({error_message:err}));
 });
@@ -197,10 +197,10 @@ router.post('/signin', async (req, res) => {
 
 // update user profile
 
-router.put('/profile/:uid', async (req, res) => {
+router.put('/profile/:id', async (req, res) => {
     const {fullname, sexe, phone , default_address, birthday, province, ville, quartier, avenue, numero} = req.body;
     
-    await User.findByIdAndUpdate(req.params.uid, req.body)
+    await User.findByIdAndUpdate(req.params.id, req.body)
         .then(() => res.send('Votre profile a été mis à jour avec succès.'))
         .catch(err => res.status(400).send({error_message: err}));
 });
@@ -215,8 +215,8 @@ router.get('/achats', async (req, res) => {
 });
 
 // get a achat by id
-router.get('/achats/:aid', async (req, res) => {
-    await Achat.findById(req.params.aid)
+router.get('/achats/:id', async (req, res) => {
+    await Achat.findById(req.params.id)
         .then(achat => res.json(achat))
         .catch(err => res.status(400).json({error_message:err}));
 });
@@ -242,8 +242,8 @@ router.get('/cards', async (req, res) => {
 });
 
 // get a card by id
-router.get('/cards/:cid', async (req, res) => {
-    await Card.findById(req.params.cid)
+router.get('/cards/:id', async (req, res) => {
+    await Card.findById(req.params.id)
         .then(card => res.json(card))
         .catch(err => res.status(400).json({error_message:err}));
 });
@@ -260,10 +260,10 @@ router.post('/cards', async (req, res) => {
 });
 
 // put card
-router.put('/cards/:cid', async (req, res) => {
+router.put('/cards/:id', async (req, res) => {
     const {id_card, uid, montant, date_expiration } = req.body;
 
-    await Card.findByIdAndUpdate(req.params.cid, req.body)
+    await Card.findByIdAndUpdate(req.params.id, req.body)
         .then(() => res.send('Votre carte a été mise à jour avec succès.'))
         .catch(err => res.status(400).send({error_message: err}));
 });
@@ -278,8 +278,8 @@ router.get('/paniers', async (req, res) => {
 });
 
 // get a panier by id
-router.get('/paniers/:cid', async (req, res) => {
-    await Panier.findById(req.params.cid)
+router.get('/paniers/:id', async (req, res) => {
+    await Panier.findById(req.params.id)
         .then(panier => res.json(panier))
         .catch(err => res.status(400).json({error_message:err}));
 });
