@@ -300,6 +300,7 @@ router.post('/paniers', async (req, res) => {
 
 // get all the scores
 router.get('/scores', async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
     await Scores.find()
         .then(scores => res.json(scores))
         .catch(err => res.status(400).json({error_message:err}));
@@ -307,7 +308,7 @@ router.get('/scores', async (req, res) => {
 
 // post a score
 router.post('/scores', async (req, res) => {
-    
+    res.header('Access-Control-Allow-Origin', '*');
     const {name, scores } = req.body;
     newScore = new Scores(req.body);
 
