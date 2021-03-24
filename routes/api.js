@@ -308,8 +308,8 @@ router.get('/scores', async (req, res) => {
 // post a score
 router.post('/scores', async (req, res) => {
     
-    const {id_score, name, scores } = req.body;
-    newScore = new Score(req.body);
+    const {id_scores, name, scores } = req.body;
+    newScore = new Scores(req.body);
 
     await newScore.save()
         .then(scoresSaved => res.json(scoresSaved))
