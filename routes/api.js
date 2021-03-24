@@ -8,6 +8,7 @@ const Card = require('../models/card.model');
 const Panier = require('../models/panier.model');
 var bcrypt = require("bcryptjs");
 var jwt = require('jsonwebtoken');
+const Scores = require('../models/scores.model');
 
 
 router.get('/test', async (req, res) => {
@@ -292,6 +293,26 @@ router.post('/paniers', async (req, res) => {
 
     await newPanier.save()
         .then(panierSaved => res.json(panierSaved))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
+// SCORES ENDPOINTS
+
+// get all the scores
+router.get('/scores', async (req, res) => {
+    await Scores.find()
+        .then(scores => res.json(scores))
+        .catch(err => res.status(400).json({error_message:err}));
+});
+
+// post a score
+router.post('/scores', async (req, res) => {
+    
+    const {id_score, name, scores } = req.body;
+    newScore = new Score(req.body);
+
+    await newScore.save()
+        .then(scoresSaved => res.json(scoresSaved))
         .catch(err => res.status(400).json({error_message:err}));
 });
 
