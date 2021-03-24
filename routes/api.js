@@ -308,7 +308,7 @@ router.get('/scores', async (req, res) => {
 // post a score
 router.post('/scores', async (req, res) => {
     
-    const {id_scores, name, scores } = req.body;
+    const {name, scores } = req.body;
     newScore = new Scores(req.body);
 
     await newScore.save()
